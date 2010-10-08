@@ -1,0 +1,11 @@
+This is an experimental client for my iOS J-PAKE implementation. It talks to the unreleased Python jpake-server project.
+
+This is really just for development and testing. Don't expect a fully working setup here.
+
+Build instructions:
+
+ git clone git@github.com:st3fan/ios-jpake.git
+ git clone git@github.com:st3fan/ios-jpake-test.git
+
+Then simply build and run PakeClient from ios-jpake-test/Mobile.
+
