@@ -32,11 +32,11 @@
 		F846A575125BFF1700FD927D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F846A574125BFF1700FD927D /* SystemConfiguration.framework */; };
 		F846A57B125BFF5400FD927D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F846A57A125BFF5400FD927D /* MobileCoreServices.framework */; };
 		F846A5F8125C14C900FD927D /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F846A5F7125C14C900FD927D /* libcrypto.a */; };
-		F846A60A125C158400FD927D /* JPAKEParty.m in Sources */ = {isa = PBXBuildFile; fileRef = F846A609125C158400FD927D /* JPAKEParty.m */; };
-		F8F1C87A125F7BEF003750A6 /* JPAKEClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F8F1C879125F7BEF003750A6 /* JPAKEClient.m */; };
 		F8F1C885125F7E32003750A6 /* NSData+AES.m in Sources */ = {isa = PBXBuildFile; fileRef = F8F1C880125F7E32003750A6 /* NSData+AES.m */; };
 		F8F1C886125F7E32003750A6 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = F8F1C882125F7E32003750A6 /* NSData+Base64.m */; };
 		F8F1C887125F7E32003750A6 /* NSData+SHA256.m in Sources */ = {isa = PBXBuildFile; fileRef = F8F1C884125F7E32003750A6 /* NSData+SHA256.m */; };
+		F8F1C8A5125F808E003750A6 /* JPAKEClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F8F1C8A2125F808E003750A6 /* JPAKEClient.m */; };
+		F8F1C8A6125F808E003750A6 /* JPAKEParty.m in Sources */ = {isa = PBXBuildFile; fileRef = F8F1C8A4125F808E003750A6 /* JPAKEParty.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,16 +87,16 @@
 		F846A574125BFF1700FD927D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		F846A57A125BFF5400FD927D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		F846A5F7125C14C900FD927D /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = lib/libcrypto.a; sourceTree = "<group>"; };
-		F846A608125C158400FD927D /* JPAKEParty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JPAKEParty.h; path = "../ios-jpake/Sources/JPAKEParty.h"; sourceTree = SOURCE_ROOT; };
-		F846A609125C158400FD927D /* JPAKEParty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JPAKEParty.m; path = "../ios-jpake/Sources/JPAKEParty.m"; sourceTree = SOURCE_ROOT; };
-		F8F1C878125F7BEF003750A6 /* JPAKEClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JPAKEClient.h; path = "../ios-jpake/Sources/JPAKEClient.h"; sourceTree = SOURCE_ROOT; };
-		F8F1C879125F7BEF003750A6 /* JPAKEClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JPAKEClient.m; path = "../ios-jpake/Sources/JPAKEClient.m"; sourceTree = SOURCE_ROOT; };
 		F8F1C87F125F7E32003750A6 /* NSData+AES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+AES.h"; sourceTree = "<group>"; };
 		F8F1C880125F7E32003750A6 /* NSData+AES.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+AES.m"; sourceTree = "<group>"; };
 		F8F1C881125F7E32003750A6 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
 		F8F1C882125F7E32003750A6 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		F8F1C883125F7E32003750A6 /* NSData+SHA256.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+SHA256.h"; sourceTree = "<group>"; };
 		F8F1C884125F7E32003750A6 /* NSData+SHA256.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+SHA256.m"; sourceTree = "<group>"; };
+		F8F1C8A1125F808E003750A6 /* JPAKEClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JPAKEClient.h; path = "../../ios-jpake/Sources/JPAKEClient.h"; sourceTree = SOURCE_ROOT; };
+		F8F1C8A2125F808E003750A6 /* JPAKEClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JPAKEClient.m; path = "../../ios-jpake/Sources/JPAKEClient.m"; sourceTree = SOURCE_ROOT; };
+		F8F1C8A3125F808E003750A6 /* JPAKEParty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JPAKEParty.h; path = "../../ios-jpake/Sources/JPAKEParty.h"; sourceTree = SOURCE_ROOT; };
+		F8F1C8A4125F808E003750A6 /* JPAKEParty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JPAKEParty.m; path = "../../ios-jpake/Sources/JPAKEParty.m"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,10 +121,10 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				F846A608125C158400FD927D /* JPAKEParty.h */,
-				F846A609125C158400FD927D /* JPAKEParty.m */,
-				F8F1C878125F7BEF003750A6 /* JPAKEClient.h */,
-				F8F1C879125F7BEF003750A6 /* JPAKEClient.m */,
+				F8F1C8A1125F808E003750A6 /* JPAKEClient.h */,
+				F8F1C8A2125F808E003750A6 /* JPAKEClient.m */,
+				F8F1C8A3125F808E003750A6 /* JPAKEParty.h */,
+				F8F1C8A4125F808E003750A6 /* JPAKEParty.m */,
 				1D3623240D0F684500981E51 /* PakeClientAppDelegate.h */,
 				1D3623250D0F684500981E51 /* PakeClientAppDelegate.m */,
 				28D7ACF60DDB3853001CB0EB /* PakeClientViewController.h */,
@@ -298,11 +298,11 @@
 				F846A534125BFEBF00FD927D /* SBJsonBase.m in Sources */,
 				F846A535125BFEBF00FD927D /* SBJsonParser.m in Sources */,
 				F846A536125BFEBF00FD927D /* SBJsonWriter.m in Sources */,
-				F846A60A125C158400FD927D /* JPAKEParty.m in Sources */,
-				F8F1C87A125F7BEF003750A6 /* JPAKEClient.m in Sources */,
 				F8F1C885125F7E32003750A6 /* NSData+AES.m in Sources */,
 				F8F1C886125F7E32003750A6 /* NSData+Base64.m in Sources */,
 				F8F1C887125F7E32003750A6 /* NSData+SHA256.m in Sources */,
+				F8F1C8A5125F808E003750A6 /* JPAKEClient.m in Sources */,
+				F8F1C8A6125F808E003750A6 /* JPAKEParty.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
