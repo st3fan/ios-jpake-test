@@ -112,10 +112,10 @@ key = j.three(server_two['payload'])
 print "X Generated key: %s" % key
 
 print "X Comparing keys"
-print "X   Desktop H(K) = %s" % sha256(key).hexdigest()
+print "X   Desktop H(K) = %s" % sha256(sha256(key).digest()).hexdigest()
 print "X   Mobile  H(K) = %s" % server_three['payload']
 
-if server_three['payload'] != sha256(key).hexdigest():
+if server_three['payload'] != sha256(sha256(key).digest()).hexdigest():
     print "X KEY FAIL"
     delete(url)
     sys.exit(1)
