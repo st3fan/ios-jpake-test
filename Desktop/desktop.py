@@ -2,7 +2,11 @@
 
 # We are the Desktop
 
-import sys, simplejson, time, urllib2, hmac, base64
+import sys, time, urllib2, hmac, base64
+try:
+    import json as simplejson
+except ImportError:
+    import simplejson
 from jpake import JPAKE, params_80, params_112, params_128
 from M2Crypto.EVP import Cipher
 from hashlib import sha256, sha1
@@ -44,14 +48,14 @@ def decrypt(data, key, iv):
     return res    
 
 s = sys.argv[1]
-(password,channel) = s[0:4],s[4:8]
+(password,channel) = s[:4],s[4:]
 
-url = "http://wopr.local:5000/%s" % channel
+url = "http://localhost:5000/%s" % channel
 
 print "X Password = %s" % password
 print "X URL = %s" % url
 
-j = JPAKE(password, signerid="Desktop", params=params_80)
+j = JPAKE(password, signerid="sender", params=params_80)
 
 # Get Server.Message1
 
@@ -62,7 +66,7 @@ print "X Got Server.Message1: %s" % str(server_one)
 # Put Client.Message1
 
 print "X Putting Client.Message1"
-client_one = { 'type': 'c1', 'payload': j.one() }
+client_one = { 'type': 'sender1', 'payload': j.one() }
 client_one_etag = put(url, client_one)
 print "X Put Client.Message1 (etag=%s) %s" % (client_one_etag, client_one)
 
@@ -79,13 +83,13 @@ while True:
             pass
         else:
             raise
-    time.sleep(5)        
+    time.sleep(1)
 print "X Got Server.Message2: %s" % server_two
 
 # Put Client.Message2
 
 print "X Putting Client.Message2"
-client_two = { 'type': 'c2', 'payload': j.two(server_one['payload']) }
+client_two = { 'type': 'sender2', 'payload': j.two(server_one['payload']) }
 client_two_etag = put(url, client_two)
 print "X Put Client.Message2 (etag=%s) %s" % (client_two_etag, client_two)
 
@@ -102,7 +106,7 @@ while True:
             pass
         else:
             raise
-    time.sleep(5)        
+    time.sleep(1)
 print "X Got Server.Message3: %s" % server_three
 
 # COMPARE KEYS
@@ -127,6 +131,6 @@ ct = encrypt(simplejson.dumps({ 'message': sys.argv[2] }), key, iv)
 payload = { 'ciphertext': base64.b64encode(ct), 'iv': base64.b64encode(iv) }
 
 print "X Putting Client.Message3"
-client_three = { 'type': 'c3', 'payload': payload }
+client_three = { 'type': 'sender3', 'payload': payload }
 client_three_etag = put(url, client_three)
 print "X Put Client.Message3 (etag=%s) %s" % (client_three_etag, client_three)
