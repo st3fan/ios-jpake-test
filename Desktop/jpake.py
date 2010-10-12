@@ -1,7 +1,10 @@
 
 import os, binascii
 from hashlib import sha256, sha1
-import simplejson
+try:
+    import json
+except ImportError:
+    import simplejson as json
 
 
 class JPAKEError(Exception):
@@ -146,20 +149,20 @@ class JPAKE:
     instance data is sensitive: protect it better than you would the original
     password. An attacker who learns the instance state from both sides will
     be able to reconstruct the shared key. These functions return a
-    dictionary: you are responsible for invoking e.g. simplejson.dumps() to
+    dictionary: you are responsible for invoking e.g. json.dumps() to
     serialize it into a string that can be written to disk. For params_80,
     the serialized JSON is typically about 750 bytes after construction, 1300
     bytes after one(), and 1800 bytes after two().
 
      j = JPAKE(password)
      send(j.one())
-     open('save.json','w').write(simplejson.dumps(j.to_json()))
+     open('save.json','w').write(json.dumps(j.to_json()))
      ...
-     j = JPAKE.from_json(simplejson.loads(open('save.json').read()))
+     j = JPAKE.from_json(json.loads(open('save.json').read()))
      send(j.two(receive()))
-     open('save.json','w').write(simplejson.dumps(j.to_json()))
+     open('save.json','w').write(json.dumps(j.to_json()))
      ...
-     j = JPAKE.from_json(simplejson.loads(open('save.json').read()))
+     j = JPAKE.from_json(json.loads(open('save.json').read()))
      key = j.three(receive())
 
     The messages returned by one() and two() are small dictionaries, safe to
@@ -186,7 +189,7 @@ class JPAKE:
         if signerid is None:
             signerid = binascii.hexlify(self.entropy(16))
         self.signerid = signerid
-        assert simplejson.dumps(self.signerid) # must be printable
+        assert json.dumps(self.signerid) # must be printable
         self.params = params
         q = params.q
         if isinstance(password, (int,long)):
@@ -198,7 +201,6 @@ class JPAKE:
             # we must convert the password (a variable-length string) into a
             # number from 1 to q-1 (inclusive).
             self.s = 1 + (string_to_number(sha256(password).digest()) % (q-1))
-            print "PASSWORD IS %s" % str(self.s)
         
 
     def createZKP(self, generator, exponent, gx):
@@ -246,7 +248,7 @@ class JPAKE:
         assert len(zkp["id"]) <= 0xffff
         s = "".join([hashbn(generator), hashbn(gr), hashbn(gx),
                      number_to_string(len(zkp["id"]), 2),
-                     zkp["id"]])
+                     str(zkp["id"]]))
         h = string_to_number(sha1(s).digest())
         gb = pow(generator, b, p)
         y = pow(gx, h, p)
@@ -368,12 +370,7 @@ class JPAKE:
                    # hashing schemes to get from K to the final key. It's
                    # important to hash K before using it, to not expose the
                    # actual number to anybody.
-        #print "NUMBER = %d" % K
-        number = number_to_string(K, self.params.orderlen)
-        #print "NUMBER = %s" % number
-        #print "NUMBER = %s" % number.encode('hex')
-        #print "HEXDIGEST OF KEY IS %s" % sha256(number).hexdigest()
-        key = sha256(number).digest()
+        key = sha256(number_to_string(K, self.params.orderlen)).digest()
         return key
 
     def getattr_hex(self, name):
