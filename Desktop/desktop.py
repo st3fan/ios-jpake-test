@@ -128,7 +128,7 @@ if server_three['payload'] != sha256(sha256(key).digest()).hexdigest():
 
 iv = '0123456780abcdef'
 ct = encrypt(simplejson.dumps({ 'message': sys.argv[2] }), key, iv)
-payload = { 'ciphertext': base64.b64encode(ct), 'iv': base64.b64encode(iv) }
+payload = { 'ciphertext': base64.b64encode(ct), 'IV': base64.b64encode(iv) }
 
 print "X Putting Client.Message3"
 client_three = { 'type': 'sender3', 'payload': payload }
