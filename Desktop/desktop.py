@@ -2,13 +2,13 @@
 
 # We are the Desktop
 
-import sys, time, urllib2, hmac, base64
+import sys, time, urllib2, hmac, base64, binascii
 try:
     import json as simplejson
 except ImportError:
     import simplejson
 from jpake import JPAKE, params_80, params_112, params_128
-from M2Crypto.EVP import Cipher
+from M2Crypto.EVP import Cipher, hmac
 from hashlib import sha256, sha1
 
 def get(url, etag = None):
@@ -45,7 +45,7 @@ def decrypt(data, key, iv):
     cipher = Cipher(alg='aes_256_cbc', key=key, iv=iv, op=0)
     res = cipher.update(data)
     res += cipher.final()
-    return res    
+    return res
 
 s = sys.argv[1]
 (password,channel) = s[:4],s[4:]
@@ -127,8 +127,12 @@ if server_three['payload'] != sha256(sha256(key).digest()).hexdigest():
 # Put Client.Message3
 
 iv = '0123456780abcdef'
-ct = encrypt(simplejson.dumps({ 'message': sys.argv[2] }), key, iv)
-payload = { 'ciphertext': base64.b64encode(ct), 'IV': base64.b64encode(iv) }
+cleartext = simplejson.dumps({ 'message': sys.argv[2] })
+ciphertext = base64.b64encode(encrypt(cleartext, key, iv))
+hmac_hex = binascii.hexlify(hmac(key, cleartext, algo="sha256"))
+payload = {'ciphertext': ciphertext,
+           'IV': base64.b64encode(iv),
+           'hmac': hmac_hex}
 
 print "X Putting Client.Message3"
 client_three = { 'type': 'sender3', 'payload': payload }
