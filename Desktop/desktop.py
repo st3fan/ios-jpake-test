@@ -2,7 +2,7 @@
 
 # We are the Desktop
 
-import sys, time, urllib2, hmac, base64
+import sys, time, urllib2, hmac, base64, random
 try:
     import json as simplejson
 except ImportError:
@@ -11,8 +11,10 @@ from jpake import JPAKE, params_80, params_112, params_128
 from M2Crypto.EVP import Cipher
 from hashlib import sha256, sha1
 
+session_id = ''.join(["%x" % random.randint(0,15) for i in range(256)])
+
 def get(url, etag = None):
-    headers = {}
+    headers = {'X-Weave-ClientID': session_id}
     if etag:
         headers['If-None-Match'] = etag
     request = urllib2.Request(url, None, headers)
@@ -23,7 +25,7 @@ def get(url, etag = None):
 def put(url, data):
     opener = urllib2.build_opener(urllib2.HTTPHandler)
     json = simplejson.dumps(data)
-    request = urllib2.Request(url, data=json)
+    request = urllib2.Request(url, data=json, headers={'X-Weave-ClientID': session_id})
     request.add_header('Content-Type', 'application/json')
     request.get_method = lambda: 'PUT'
     response = urllib2.urlopen(request)
@@ -31,7 +33,7 @@ def put(url, data):
 
 def delete(url):
     opener = urllib2.build_opener(urllib2.HTTPHandler)
-    request = urllib2.Request(url)
+    request = urllib2.Request(url, None, headers={'X-Weave-ClientID': session_id})
     request.get_method = lambda: 'DELETE'
     response = urllib2.urlopen(request)
 
@@ -48,12 +50,14 @@ def decrypt(data, key, iv):
     return res    
 
 s = sys.argv[1]
-(password,channel) = s[:4],s[4:]
+(password,channel) = (s[0:4] + s[5:9], s[10:14])
 
 url = "http://localhost:5000/%s" % channel
 
 print "X Password = %s" % password
-print "X URL = %s" % url
+print "X Channel  = %s" % channel
+print "X Server   = %s" % url
+print "X Message  = %s" % sys.argv[2]
 
 j = JPAKE(password, signerid="sender", params=params_80)
 
