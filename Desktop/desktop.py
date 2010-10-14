@@ -14,7 +14,7 @@ from hashlib import sha256, sha1
 session_id = ''.join(["%x" % random.randint(0,15) for i in range(256)])
 
 def get(url, etag = None):
-    headers = {'X-Weave-ClientID': session_id}
+    headers = {'X-KeyExchange-Id': session_id}
     if etag:
         headers['If-None-Match'] = etag
     request = urllib2.Request(url, None, headers)
@@ -25,7 +25,7 @@ def get(url, etag = None):
 def put(url, data):
     opener = urllib2.build_opener(urllib2.HTTPHandler)
     json = simplejson.dumps(data)
-    request = urllib2.Request(url, data=json, headers={'X-Weave-ClientID': session_id})
+    request = urllib2.Request(url, data=json, headers={'X-KeyExchange-Id': session_id})
     request.add_header('Content-Type', 'application/json')
     request.get_method = lambda: 'PUT'
     response = urllib2.urlopen(request)
@@ -33,7 +33,7 @@ def put(url, data):
 
 def delete(url):
     opener = urllib2.build_opener(urllib2.HTTPHandler)
-    request = urllib2.Request(url, None, headers={'X-Weave-ClientID': session_id})
+    request = urllib2.Request(url, None, headers={'X-KeyExchange-Id': session_id})
     request.get_method = lambda: 'DELETE'
     response = urllib2.urlopen(request)
 
