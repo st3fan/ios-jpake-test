@@ -10,7 +10,7 @@
 
 - (void) viewDidLoad
 {
-	_client = [[JPAKEClient alloc] initWithServer: [NSURL URLWithString: @"http://wopr.local:5000"] delegate: self];
+	_client = [[JPAKEClient alloc] initWithServer: [NSURL URLWithString: @"http://localhost:5000/"] delegate: self];
 	[_client start];
 }
 
