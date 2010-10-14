@@ -1,46 +1,33 @@
 // PakeClientViewController.m
 
 #import "PakeClientViewController.h"
-#import "JPAKEClient.h"
 
 @implementation PakeClientViewController
 
-@synthesize statusLabel = _statusLabel;
-@synthesize passwordLabel = _passwordLabel;
-
-- (void) viewDidLoad
+- (void) JPAKEViewController: (JPAKEViewController*) vc didFinishWithMessage: (id) message
 {
-	_client = [[JPAKEClient alloc] initWithServer: [NSURL URLWithString: @"http://localhost:5000/"] delegate: self];
-	[_client start];
-}
-
-#pragma mark -
-
-- (IBAction) cancel
-{
-	[_client cancel];
-}
-
-#pragma mark -
-
-- (void) client: (JPAKEClient*) client didGenerateSecret: (NSString*) secret
-{
-	_passwordLabel.text = secret;
-}
-
-- (void) client: (JPAKEClient*) client didFailWithError: (NSError*) error
-{
-	NSLog(@"client: %@ didFailWithError: %@", client, error);
-}
-
-- (void) client: (JPAKEClient*) client didReceivePayload: (id) payload
-{
-	NSLog(@"client: %@ didReceivePayload: %@", client, payload);
-
-	UIAlertView* alert = [[UIAlertView alloc] initWithTitle: @"Receive J-PAKE Message"
-		message: [payload objectForKey: @"message"] delegate: nil cancelButtonTitle: @"OK" otherButtonTitles: nil];
+	UIAlertView* alert = [[[UIAlertView alloc] initWithTitle: @"Received J-PAKE Message"
+		message: [message description]
+			delegate: nil cancelButtonTitle: @"OK" otherButtonTitles: nil] autorelease];
 	[alert show];
-	[alert autorelease];
+}
+
+- (void) JPAKEViewController: (JPAKEViewController*) vc didFailWithError: (NSError*) error
+{
+	UIAlertView* alert = [[[UIAlertView alloc] initWithTitle: @"Received J-PAKE Error"
+		message: [error localizedDescription]
+			delegate: nil cancelButtonTitle: @"OK" otherButtonTitles: nil] autorelease];
+	[alert show];
+}
+
+- (IBAction) test
+{
+	JPAKEViewController* vc = [[JPAKEViewController new] autorelease];
+	if (vc != nil) {
+		vc.server = [NSURL URLWithString: @"http://localhost:5000"];
+		vc.delegate = self;
+		[self presentModalViewController: vc animated: YES];
+	}
 }
 
 @end

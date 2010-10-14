@@ -1,19 +1,11 @@
 // PakeClientViewController.h
 
 #import <UIKit/UIKit.h>
-#import "JPAKEClient.h"
+#import "JPAKEViewController.h"
 
-@interface PakeClientViewController : UIViewController <JPAKEClientDelegate> {
-  @private
-	UILabel* _passwordLabel;
-	UILabel* _statusLabel;
-  @private
-	JPAKEClient* _client;
+@interface PakeClientViewController : UIViewController <JPAKEViewControllerDelegate> {
 }
 
-@property (nonatomic,assign) IBOutlet UILabel* passwordLabel;
-@property (nonatomic,assign) IBOutlet UILabel* statusLabel;
-
-- (IBAction) cancel;
+- (IBAction) test;
 
 @end
