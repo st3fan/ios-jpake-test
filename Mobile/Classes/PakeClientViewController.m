@@ -6,6 +6,8 @@
 
 - (void) JPAKEViewController: (JPAKEViewController*) vc didFinishWithMessage: (id) message
 {
+	[vc dismissModalViewControllerAnimated: YES];
+
 	UIAlertView* alert = [[[UIAlertView alloc] initWithTitle: @"Received J-PAKE Message"
 		message: [message description]
 			delegate: nil cancelButtonTitle: @"OK" otherButtonTitles: nil] autorelease];
@@ -14,6 +16,8 @@
 
 - (void) JPAKEViewController: (JPAKEViewController*) vc didFailWithError: (NSError*) error
 {
+	[vc dismissModalViewControllerAnimated: YES];
+
 	UIAlertView* alert = [[[UIAlertView alloc] initWithTitle: @"Received J-PAKE Error"
 		message: [error localizedDescription]
 			delegate: nil cancelButtonTitle: @"OK" otherButtonTitles: nil] autorelease];
