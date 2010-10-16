@@ -81,6 +81,60 @@ static char encodingTable[64] = {
 	return self;
 }
 
+-(id) initWithBase16EncodedString:(NSString *) string
+{
+	if (string == nil || ([string length] % 2) != 0) {
+		[self release];
+		return nil;
+	}
+	
+	if ([string length] == 0) {
+		return [super init];
+	}
+
+	size_t length = [string length] / 2;
+	unsigned char* data = malloc(length);
+	if (data != nil)
+	{
+		const char* src = [string cStringUsingEncoding: NSASCIIStringEncoding];
+		unsigned char* dst = data;
+	
+		for (size_t i = 0; i < length; i++)
+		{
+			unsigned char result = 0;
+
+			if (*src >= '0' && *src <= '9') {
+				result = (*src++ - '0') << 4;
+			} else if (*src >= 'a' && *src <= 'f') {
+				result = (*src++ - 'a' + 10) << 4;
+			} else if (*src >= 'A' && *src <= 'F') {
+				result = (*src++ - 'A' + 10) << 4;
+			} else {
+				free(data);
+				[self release];
+				return nil;
+			}
+
+			if (*src >= '0' && *src <= '9') {
+				result |= (*src++ - '0');
+			} else if (*src >= 'a' && *src <= 'f') {
+				result |= (*src++ - 'a' + 10);
+			} else if (*src >= 'A' && *src <= 'F') {
+				result |= (*src++ - 'A' + 10);
+			} else {
+				free(data);
+				[self release];
+				return nil;
+			}
+			
+			*dst++ = result;
+		}
+	}
+	
+	self = [self initWithBytesNoCopy: data length: length freeWhenDone: YES];
+	return self;
+}
+
 -(NSString *) base64Encoding {
 	return [self base64EncodingWithLineLength:0];
 }
