@@ -120,6 +120,7 @@ key = j.three(server_two['payload'])
 print "X Generated key: %s" % key
 
 print "X Comparing keys"
+print "    Desktop K    = %s" % sha256(key).hexdigest()
 print "X   Desktop H(K) = %s" % sha256(sha256(key).digest()).hexdigest()
 print "X   Mobile  H(K) = %s" % server_three['payload']
 
@@ -132,9 +133,10 @@ if server_three['payload'] != sha256(sha256(key).digest()).hexdigest():
 
 iv = '0123456780abcdef'
 cleartext = simplejson.dumps({ 'message': sys.argv[2] })
-ciphertext = base64.b64encode(encrypt(cleartext, key, iv))
-hmac_hex = binascii.hexlify(hmac(key, cleartext, algo="sha256"))
-payload = {'ciphertext': ciphertext,
+ciphertext = encrypt(cleartext, key, iv)
+ciphertext_base64 = base64.b64encode(ciphertext)
+hmac_hex = binascii.hexlify(hmac(key, ciphertext , algo="sha256"))
+payload = {'ciphertext': ciphertext_base64,
            'IV': base64.b64encode(iv),
            'hmac': hmac_hex}
 
