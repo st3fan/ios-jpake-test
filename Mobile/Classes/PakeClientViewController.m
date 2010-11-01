@@ -24,11 +24,23 @@
 	[alert show];
 }
 
+- (void) JPAKEViewControllerDidCancel:(JPAKEViewController *)vc
+{
+	[vc dismissModalViewControllerAnimated: YES];
+
+	UIAlertView* alert = [[[UIAlertView alloc] initWithTitle: nil
+		message: @"Operation was cancelled by user"
+			delegate: nil cancelButtonTitle: @"OK" otherButtonTitles: nil] autorelease];
+	[alert show];
+}
+
+#pragma mark -
+
 - (IBAction) test
 {
 	JPAKEViewController* vc = [[JPAKEViewController new] autorelease];
 	if (vc != nil) {
-		vc.server = [NSURL URLWithString: @"http://localhost:5000"];
+		vc.server = [NSURL URLWithString: @"http://173.32.34.78:5000/"];
 		vc.delegate = self;
 		[self presentModalViewController: vc animated: YES];
 	}
