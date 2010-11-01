@@ -155,7 +155,7 @@ def main():
     hmac_key = sha256("hmac:" + key).digest()
     
     iv = '0123456780abcdef'
-    cleartext = simplejson.dumps({ 'username': 'st3fan', 'password': 'test', 'secret': 'OHAI-ITIS-CAPS-LOCK-DAYY' })
+    cleartext = simplejson.dumps({ 'account': 'st3fan', 'password': 'test', 'synckey': 'OHAI-ITIS-CAPS-LOCK-DAYY' })
     ciphertext = encrypt(cleartext, aes_key, iv)
     ciphertext_base64 = base64.b64encode(ciphertext)
     hmac_hex = binascii.hexlify(hmac(hmac_key, ciphertext_base64, algo="sha256"))
