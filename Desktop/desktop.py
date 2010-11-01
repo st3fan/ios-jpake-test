@@ -151,8 +151,8 @@ def main():
     
     # Put Client.Message3
 
-    aes_key = sha256("encrypt:" + key)
-    hmac_key = sha256("hmac:" + key)
+    aes_key = sha256("encrypt:" + key).digest()
+    hmac_key = sha256("hmac:" + key).digest()
     
     iv = '0123456780abcdef'
     cleartext = simplejson.dumps({ 'username': 'st3fan', 'password': 'test', 'secret': 'OHAI-ITIS-CAPS-LOCK-DAYY' })
