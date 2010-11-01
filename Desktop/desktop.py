@@ -150,12 +150,15 @@ def main():
         sys.exit(1)
     
     # Put Client.Message3
+
+    aes_key = sha256("encrypt:" + key)
+    hmac_key = sha256("hmac:" + key)
     
     iv = '0123456780abcdef'
     cleartext = simplejson.dumps({ 'username': 'st3fan', 'password': 'test', 'secret': 'OHAI-ITIS-CAPS-LOCK-DAYY' })
-    ciphertext = encrypt(cleartext, key, iv)
+    ciphertext = encrypt(cleartext, aes_key, iv)
     ciphertext_base64 = base64.b64encode(ciphertext)
-    hmac_hex = binascii.hexlify(hmac(key, ciphertext_base64, algo="sha256"))
+    hmac_hex = binascii.hexlify(hmac(hmac_key, ciphertext_base64, algo="sha256"))
     payload = {'ciphertext': ciphertext_base64,
                'IV': base64.b64encode(iv),
                'hmac': hmac_hex}
