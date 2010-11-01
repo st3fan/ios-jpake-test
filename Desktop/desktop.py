@@ -135,7 +135,7 @@ iv = '0123456780abcdef'
 cleartext = simplejson.dumps({ 'message': sys.argv[2] })
 ciphertext = encrypt(cleartext, key, iv)
 ciphertext_base64 = base64.b64encode(ciphertext)
-hmac_hex = binascii.hexlify(hmac(key, ciphertext , algo="sha256"))
+hmac_hex = binascii.hexlify(hmac(key, ciphertext_base64, algo="sha256"))
 payload = {'ciphertext': ciphertext_base64,
            'IV': base64.b64encode(iv),
            'hmac': hmac_hex}
