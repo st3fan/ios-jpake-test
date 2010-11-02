@@ -36,12 +36,26 @@
 
 #pragma mark -
 
+- (void) viewDidLoad
+{
+	_reporter = [[JPAKEReporter alloc] initWithServer: [NSURL URLWithString: @"http://173.32.34.78:5000/"]];
+	[_reporter reportCode: 200 message: @"OKIEDOKIE"];
+}
+
+- (void) viewDidUnload
+{
+	[_reporter release];
+}
+
+#pragma mark -
+
 - (IBAction) test
 {
 	JPAKEViewController* vc = [[JPAKEViewController new] autorelease];
 	if (vc != nil) {
 		vc.server = [NSURL URLWithString: @"http://173.32.34.78:5000/"];
 		vc.delegate = self;
+		vc.reporter = _reporter;
 		[self presentModalViewController: vc animated: YES];
 	}
 }

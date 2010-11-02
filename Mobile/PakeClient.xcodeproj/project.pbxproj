@@ -32,6 +32,7 @@
 		F846A575125BFF1700FD927D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F846A574125BFF1700FD927D /* SystemConfiguration.framework */; };
 		F846A57B125BFF5400FD927D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F846A57A125BFF5400FD927D /* MobileCoreServices.framework */; };
 		F846A5F8125C14C900FD927D /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F846A5F7125C14C900FD927D /* libcrypto.a */; };
+		F8515B31127F85A9008DBB20 /* JPAKEReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = F8515B30127F85A9008DBB20 /* JPAKEReporter.m */; };
 		F8F1C885125F7E32003750A6 /* NSData+AES.m in Sources */ = {isa = PBXBuildFile; fileRef = F8F1C880125F7E32003750A6 /* NSData+AES.m */; };
 		F8F1C886125F7E32003750A6 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = F8F1C882125F7E32003750A6 /* NSData+Base64.m */; };
 		F8F1C887125F7E32003750A6 /* NSData+SHA256.m in Sources */ = {isa = PBXBuildFile; fileRef = F8F1C884125F7E32003750A6 /* NSData+SHA256.m */; };
@@ -89,6 +90,8 @@
 		F846A574125BFF1700FD927D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		F846A57A125BFF5400FD927D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		F846A5F7125C14C900FD927D /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = lib/libcrypto.a; sourceTree = "<group>"; };
+		F8515B2F127F85A9008DBB20 /* JPAKEReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JPAKEReporter.h; path = "../../ios-jpake/Sources/JPAKEReporter.h"; sourceTree = SOURCE_ROOT; };
+		F8515B30127F85A9008DBB20 /* JPAKEReporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JPAKEReporter.m; path = "../../ios-jpake/Sources/JPAKEReporter.m"; sourceTree = SOURCE_ROOT; };
 		F8F1C87F125F7E32003750A6 /* NSData+AES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+AES.h"; sourceTree = "<group>"; };
 		F8F1C880125F7E32003750A6 /* NSData+AES.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+AES.m"; sourceTree = "<group>"; };
 		F8F1C881125F7E32003750A6 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
@@ -130,6 +133,8 @@
 				F8F1C8A2125F808E003750A6 /* JPAKEClient.m */,
 				F8F1C8A3125F808E003750A6 /* JPAKEParty.h */,
 				F8F1C8A4125F808E003750A6 /* JPAKEParty.m */,
+				F8515B2F127F85A9008DBB20 /* JPAKEReporter.h */,
+				F8515B30127F85A9008DBB20 /* JPAKEReporter.m */,
 				F8FF9B9F126785E2006C09AB /* JPAKEViewController.h */,
 				F8FF9BA0126785E2006C09AB /* JPAKEViewController.m */,
 				F8FF9BA1126785E2006C09AB /* JPAKEViewController.xib */,
@@ -313,6 +318,7 @@
 				F8F1C8A5125F808E003750A6 /* JPAKEClient.m in Sources */,
 				F8F1C8A6125F808E003750A6 /* JPAKEParty.m in Sources */,
 				F8FF9BA2126785E2006C09AB /* JPAKEViewController.m in Sources */,
+				F8515B31127F85A9008DBB20 /* JPAKEReporter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,6 +342,7 @@
 					"\"$(SRCROOT)/lib\"",
 				);
 				PRODUCT_NAME = PakeClient;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -354,6 +361,7 @@
 					"\"$(SRCROOT)/lib\"",
 				);
 				PRODUCT_NAME = PakeClient;
+				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
