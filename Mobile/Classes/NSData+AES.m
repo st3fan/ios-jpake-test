@@ -68,6 +68,11 @@
 		
 		if (cryptStatus == kCCSuccess) {
 			result = [[self alloc] initWithBytesNoCopy: buffer length: dataOutMoved];
+			if (result == nil) {
+				free(buffer);
+			}
+		} else {
+			free(buffer);
 		}
 	}
 	
