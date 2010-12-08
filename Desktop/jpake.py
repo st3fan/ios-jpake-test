@@ -5,7 +5,7 @@ try:
     import json
 except ImportError:
     import simplejson as json
-
+from M2Crypto.EVP import hmac
 
 class JPAKEError(Exception):
     pass
@@ -224,7 +224,7 @@ class JPAKE:
         s = "".join([hashbn(generator), hashbn(gr), hashbn(gx),
                      number_to_string(len(self.signerid), 2),
                      self.signerid])
-        h = string_to_number(sha1(s).digest())
+        h = string_to_number(sha256(s).digest())
 
         b = (r - exponent*h) % q
         return {"gr": "%x"%gr, # gr and b are the important values
@@ -249,7 +249,7 @@ class JPAKE:
         s = "".join([hashbn(generator), hashbn(gr), hashbn(gx),
                      number_to_string(len(zkp["id"]), 2),
                      str(zkp["id"])])
-        h = string_to_number(sha1(s).digest())
+        h = string_to_number(sha256(s).digest())
         gb = pow(generator, b, p)
         y = pow(gx, h, p)
         if gr != (gb*y)%p:
@@ -370,7 +370,7 @@ class JPAKE:
                    # hashing schemes to get from K to the final key. It's
                    # important to hash K before using it, to not expose the
                    # actual number to anybody.
-        key = sha256(number_to_string(K, self.params.orderlen)).digest()
+        key = hmac("\0"*32, number_to_string(K, self.params.orderlen), algo="sha256")
         return key
 
     def getattr_hex(self, name):

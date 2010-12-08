@@ -79,7 +79,7 @@ def main():
     print "X Server      = %s" % server
     print "X Channel URL = %s" % url
     
-    j = JPAKE(password, signerid="sender", params=params_80)
+    j = JPAKE(password, signerid="sender", params=params_128)
     
     # Get Server.Message1
     
@@ -151,11 +151,17 @@ def main():
     
     # Put Client.Message3
 
-    aes_key = sha256("encrypt:" + key).digest()
-    hmac_key = sha256("hmac:" + key).digest()
+    # aes_key  = HMAC-SHA256(key, "Sync-AES_256_CBC-HMAC256" + 0x01)
+    # hmac_key = HMAC-SHA256(key, aes_key + "Sync-AES_256_CBC-HMAC256" + 0x02)
+
+    aes_key  = hmac("Sync-AES_256_CBC-HMAC256\x01", key, algo="sha256")
+    hmac_key = hmac(aes_key + "Sync-AES_256_CBC-HMAC256\x02", key, algo="sha256")
+
+    #aes_key = sha256("encrypt:" + key).digest()
+    #hmac_key = sha256("hmac:" + key).digest()
     
     iv = '0123456780abcdef'
-    cleartext = simplejson.dumps({ 'account': 'st3fan', 'password': 'test', 'synckey': 'OHAI-ITIS-CAPS-LOCK-DAYY' })
+    cleartext = simplejson.dumps({ 'account': 'stefan@arentz.ca', 'password': 'q1w2e3r4', 'synckey': 'msed952bhxhx5iti6qx5vygrgu', 'serverURL': 'http://sa.tk:5000/' })
     ciphertext = encrypt(cleartext, aes_key, iv)
     ciphertext_base64 = base64.b64encode(ciphertext)
     hmac_hex = binascii.hexlify(hmac(hmac_key, ciphertext_base64, algo="sha256"))
