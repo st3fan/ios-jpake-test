@@ -200,7 +200,8 @@ class JPAKE:
             assert isinstance(password, str)
             # we must convert the password (a variable-length string) into a
             # number from 1 to q-1 (inclusive).
-            self.s = 1 + (string_to_number(sha256(password).digest()) % (q-1))
+            #self.s = 1 + (string_to_number(sha256(password).digest()) % (q-1))
+            self.s = string_to_number(password)
         
 
     def createZKP(self, generator, exponent, gx):
