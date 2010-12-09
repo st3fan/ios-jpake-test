@@ -135,33 +135,30 @@ def main():
     
     # COMPARE KEYS
     
-    print "X Generating key"
+    print "X Generating keys"
+
+    # This is the 'master' key. It is E = HMAC(0x00 * 32, K)
     key = j.three(server_two['payload'])
-    print "X Generated key: %s" % key
     
-    print "X Comparing keys"
-    print "    Desktop K    = %s" % sha256(key).hexdigest()
-    print "X   Desktop H(K) = %s" % sha256(sha256(key).digest()).hexdigest()
-    print "X   Mobile  H(K) = %s" % server_three['payload']
+    aes_key  = hmac("Sync-AES_256_CBC-HMAC256\x01", key, algo="sha256")
+    hmac_key = hmac(aes_key + "Sync-AES_256_CBC-HMAC256\x02", key, algo="sha256")
+
+    # Check if the other side has the correct key. We do this by decrypting the payload (ciphertext/IV) with our calculated AES
+    # key. The result should be '0123456789ABCDEF'
+
+    check = decrypt(base64.b64decode(server_three['payload']['ciphertext']), aes_key, base64.b64decode(server_three['payload']['IV']))
+    print "X Check = %s" % binascii.hexlify(check)
     
-    if server_three['payload'] != sha256(sha256(key).digest()).hexdigest():
-        print "X KEY FAIL"
+    if check != '0123456789ABCDEF':
+        print "X CHECK FAIL"
         delete(url)
         sys.exit(1)
     
     # Put Client.Message3
 
-    # aes_key  = HMAC-SHA256(key, "Sync-AES_256_CBC-HMAC256" + 0x01)
-    # hmac_key = HMAC-SHA256(key, aes_key + "Sync-AES_256_CBC-HMAC256" + 0x02)
-
-    aes_key  = hmac("Sync-AES_256_CBC-HMAC256\x01", key, algo="sha256")
-    hmac_key = hmac(aes_key + "Sync-AES_256_CBC-HMAC256\x02", key, algo="sha256")
-
-    #aes_key = sha256("encrypt:" + key).digest()
-    #hmac_key = sha256("hmac:" + key).digest()
-    
-    iv = '0123456780abcdef'
-    cleartext = simplejson.dumps({ 'account': 'stefan@arentz.ca', 'password': 'q1w2e3r4', 'synckey': 'msed952bhxhx5iti6qx5vygrgu', 'serverURL': 'http://sa.tk:5000/' })
+    iv = '0123456780abcdef' # This should be random but it does not matter for this test
+    cleartext = simplejson.dumps({ 'account': 'ACCOUNT', 'password': 'PASSWORD',
+                                   'synckey': 'SYNCKEY', 'serverURL': 'SERVERURL' })
     ciphertext = encrypt(cleartext, aes_key, iv)
     ciphertext_base64 = base64.b64encode(ciphertext)
     hmac_hex = binascii.hexlify(hmac(hmac_key, ciphertext_base64, algo="sha256"))
